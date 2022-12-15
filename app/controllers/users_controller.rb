@@ -9,6 +9,15 @@ class UsersController < ApplicationController
         end
     end
 
+    def show 
+        user = User.find_by(id: session[:user_id])
+        if user
+            render json: user
+        else 
+            render json: {error: "User not logged in"}, status: :unauthorized
+        end
+    end
+
     private 
     def user_params
         params.permit(:username, :password, :image_url, :bio, :password_confirmation)
